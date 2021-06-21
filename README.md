@@ -1,1 +1,1 @@
-# testproject_search
+# Test Project Search (뉴스 검색)
