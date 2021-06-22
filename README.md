@@ -4,6 +4,9 @@
 
 $ yarn
 
+# yarn
+brew install yarn
+
 # IOS의 경우
 
 $ cd ios && pod install && cd ..
