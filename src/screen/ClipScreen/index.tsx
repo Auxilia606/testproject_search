@@ -5,7 +5,7 @@ import { RootState } from 'reducer';
 import Item from '../../asset/ListItem';
 
 const styles = StyleSheet.create({
-    screen: { flex: 1 },
+    screen: { flex: 1, paddingTop: 40 },
     textInput: { height: 40, margin: 12, borderWidth: 1 },
     searchModalView: {
         left: 12,

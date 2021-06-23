@@ -19,6 +19,7 @@ interface WebViewModalProps {
 
 const styles = StyleSheet.create({
     header: {
+        marginTop: 40,
         height: 30,
         justifyContent: 'center',
         alignItems: 'flex-end',

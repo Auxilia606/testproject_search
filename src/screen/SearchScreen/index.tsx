@@ -29,7 +29,7 @@ import { writeSearchWordData } from '../../storage/search';
 
 const styles = StyleSheet.create({
     screen: { flex: 1 },
-    textInput: { height: 40, margin: 12, borderWidth: 1 },
+    textInput: { height: 40, margin: 12, marginTop: 40, borderWidth: 1 },
     searchModalView: {
         left: 12,
         right: 12,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         zIndex: 2,
         padding: 10,
-        top: 51,
+        top: 79,
         position: 'absolute',
         alignItems: 'flex-start',
     },
