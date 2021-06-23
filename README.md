@@ -9,6 +9,15 @@ brew install yarn
 $ cd ios && pod install && cd ..
 $ yarn ios
 
+pod install ERROR 발생시
+
+sudo gem uninstall xcodeproj
+sudo gem install xcodeproj
+sudo gem install cocoapods
+$ cd ios && pod clean
+$ pod repo update
+$ pod install
+
 $ yarn android
 
 # 설명
