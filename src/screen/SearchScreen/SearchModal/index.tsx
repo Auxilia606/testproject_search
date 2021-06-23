@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { SearchWordItem } from '../../../action/search';
+import Item from './SearchModalItem';
 
 export interface SearchModalProps {
     data?: SearchWordItem[];
@@ -20,9 +21,11 @@ const SearchModal: React.FunctionComponent<SearchModalProps> = ({
             <View style={style}>
                 {data.map(item => {
                     return (
-                        <Text style={textStyle} key={item.key}>
-                            {item.word}
-                        </Text>
+                        <Item
+                            textStyle={textStyle}
+                            key={item.key}
+                            word={item.word}
+                        />
                     );
                 })}
             </View>

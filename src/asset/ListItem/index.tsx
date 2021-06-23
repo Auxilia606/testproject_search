@@ -1,11 +1,14 @@
 import React from 'react';
 import { useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'reducer';
 import {
     setWebViewModalURL,
     setWebViewModalVisible,
-} from '../../../action/search';
+} from '../../action/search';
+import { addClipItem, removeClipItem } from '../../action/search';
+import { writeClipData } from '../../storage/search';
 
 const styles = StyleSheet.create({
     item: {
@@ -34,15 +37,22 @@ interface NewsItemProps {
     title: string;
     pub_date: string;
     url: string;
+    id: string;
+    buttonText?: string;
 }
 
-const NewsItem: React.FunctionComponent<NewsItemProps> = ({
+const ListItem: React.FunctionComponent<NewsItemProps> = ({
     title,
     pub_date,
     url,
+    id,
+    buttonText,
 }) => {
     const pub_date_num = pub_date.match(/\d+/g);
     const date = `${pub_date_num[0]}.${pub_date_num[1]}.${pub_date_num[2]} ${pub_date_num[3]}:${pub_date_num[4]}`;
+    const { clipList } = useSelector((state: RootState) => ({
+        clipList: state.searchReducer.clipList,
+    }));
     const dispatch = useDispatch();
     const setURL = useCallback(
         string => {
@@ -56,21 +66,32 @@ const NewsItem: React.FunctionComponent<NewsItemProps> = ({
         },
         [dispatch],
     );
+    const onPressTitleHandler = useCallback(() => {
+        setURL(url);
+        onSetWebViewModalVisible(true);
+    }, [setURL, onSetWebViewModalVisible, url]);
+    const onAddClipItem = useCallback(() => {
+        dispatch(addClipItem(id));
+        writeClipData(clipList);
+    }, [dispatch, id, clipList]);
+    const onRemoveClipItem = useCallback(() => {
+        dispatch(removeClipItem(id));
+        writeClipData(clipList);
+    }, [dispatch, id, clipList]);
+
     return (
         <View style={styles.item}>
-            <TouchableOpacity
-                onPress={() => {
-                    console.log('url', url);
-                    setURL(url);
-                    onSetWebViewModalVisible(true);
-                }}>
+            <TouchableOpacity onPress={onPressTitleHandler}>
                 <Text style={styles.title}>{title}</Text>
             </TouchableOpacity>
             <View style={styles.dateContainer}>
                 <Text style={styles.date}>{date}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={
+                        buttonText === 'Clip' ? onAddClipItem : onRemoveClipItem
+                    }>
                     <View style={styles.clipButton}>
-                        <Text>Clip</Text>
+                        <Text>{buttonText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -78,4 +99,4 @@ const NewsItem: React.FunctionComponent<NewsItemProps> = ({
     );
 };
 
-export default React.memo(NewsItem);
+export default React.memo(ListItem);
